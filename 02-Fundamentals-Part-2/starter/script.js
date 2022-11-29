@@ -1,0 +1,127 @@
+"use strict";
+
+/*
+let hasDriversLicense = false;
+let testPassed = true;
+
+if (testPassed) hasDriversLicense = true;
+if (hasDriversLicense) console.log("You can drive");
+*/
+
+// Functions
+/*
+function describeCountry(country, population, capitalCity) {
+  return `${country} has ${population} million people and its capital city is ${capitalCity}`;
+}
+
+console.log(describeCountry("India", 1200, "Delhi"));
+console.log(describeCountry("USA", 500, "Washington"));
+console.log(describeCountry("France", 40, "Paris"));
+*/
+
+// Function Declations
+/*
+function percentageOfWorld1(population) {
+  return (population / 7900) * 100;
+}
+
+console.log(percentageOfWorld1(1441));
+
+// Function Expression
+
+const percentageOfWorld2 = function name(population) {
+  return (population / 7900) * 100;
+};
+
+console.log(percentageOfWorld2(1200));
+
+//  Arrow Function
+
+const percentageOfWorld3 = (population) => (population / 7900) * 100;
+console.log(percentageOfWorld3(500));
+*/
+
+/*
+
+// CODING CHALLENGE 1
+const calcAverage = (s1, s2, s3) => (s1 + s2 + s3) / 3;
+
+const dolphinAverage = calcAverage(85, 54, 41);
+const koalaAverage = calcAverage(23, 34, 27);
+
+function checkWinner(dolphinAverage, koalaAverage) {
+  if (dolphinAverage > koalaAverage && dolphinAverage >= 2 * koalaAverage) {
+    console.log(`Dolphins win (${dolphinAverage} vs. ${koalaAverage})`);
+  } else if (
+    koalaAverage > dolphinAverage &&
+    koalaAverage >= 2 * dolphinAverage
+  ) {
+    console.log(`Koalas win (${koalaAverage} vs. ${dolphinAverage})`);
+  } else {
+    console.log("Its a Draw");
+  }
+}
+
+checkWinner(dolphinAverage, koalaAverage);
+
+const checkWinner2 = function name(dolphinAverage, koalaAverage) {
+  if (dolphinAverage >= 2 * koalaAverage) {
+    console.log(`Dolphins win (${dolphinAverage} vs. ${koalaAverage})`);
+  } else if (koalaAverage >= 2 * dolphinAverage) {
+    console.log(`Koalas win (${koalaAverage} vs. ${dolphinAverage})`);
+  } else {
+    console.log("No one wins");
+  }
+};
+
+checkWinner2(1, 5);
+
+*/
+
+/*
+// Function Calling Other Functions
+
+const percentageOfWorld1 = function name(population) {
+  return (population / 7900) * 100;
+};
+
+const describePopulation = function name(country, population) {
+  const percentage = percentageOfWorld1(population);
+  return `${country} has ${population} million people, which is about ${percentage} of the world`;
+};
+
+console.log(describePopulation("India", 1200));
+*/
+
+//    ARRAYS
+
+/*
+const populations = [152, 1500, 1200, 200];
+console.log(populations);
+console.log(populations.length === 4);
+
+const percentageOfWorld1 = function name(population) {
+  return (population / 7900) * 100;
+};
+
+const percentages = [
+  percentageOfWorld1(populations[0]),
+  percentageOfWorld1(populations[1]),
+  percentageOfWorld1(populations[2]),
+];
+
+console.log(percentages);
+*/
+
+//  CHALLENGE
+const calcTip = function name(bill) {
+  const tip = bill >= 50 && bill <= 300 ? bill * 0.15 : bill * 0.2;
+  return tip;
+};
+
+const bills = [125, 555, 44];
+const tips = [calcTip(bills[0]), calcTip(bills[1]), calcTip(bills[2])];
+
+const total = [bills[0] + tips[0], bills[1] + tips[1], bills[2] + tips[2]];
+console.log(tips);
+console.log(total);
