@@ -113,7 +113,8 @@ const percentages = [
 console.log(percentages);
 */
 
-//  CHALLENGE
+//  CODING CHALLENGE
+/*
 const calcTip = function name(bill) {
   const tip = bill >= 50 && bill <= 300 ? bill * 0.15 : bill * 0.2;
   return tip;
@@ -125,3 +126,61 @@ const tips = [calcTip(bills[0]), calcTip(bills[1]), calcTip(bills[2])];
 const total = [bills[0] + tips[0], bills[1] + tips[1], bills[2] + tips[2]];
 console.log(tips);
 console.log(total);
+*/
+
+// ARRAY ASSIGNMENT
+
+/*
+const neighbours = [
+  "Bangladesh",
+  "Pakistan",
+  "China",
+  "Bhutan",
+  "Nepal",
+  "Myanmar",
+  "Thailand",
+  "AFganisthan",
+];
+
+neighbours.push("Utopia");
+console.log(neighbours);
+neighbours.pop();
+console.log(neighbours);
+
+if (neighbours.includes("Germany")) {
+  console.log("Present");
+} else {
+  console.log("Probably not a central European Country");
+}
+
+neighbours[neighbours.indexOf("Pakistan")] = "Pakistan Bhai";
+console.log(neighbours);
+*/
+
+//  OBJECT ASSIGNMENT
+/*
+const myCountry = {
+  country: "India",
+  capital: "New Delhi",
+  language: "Hindi",
+  population: 1200,
+  neighbours: ["Pakistan", "Bangladesh", "Nepal", "Myanmar", "Bhutan"],
+};
+
+console.log(myCountry);
+*/
+
+// LECTURE: Dot vs. Bracket Notation
+/*
+const myCountry = {
+  country: "India",
+  capital: "New Delhi",
+  language: "Hindi",
+  population: 1200,
+  neighbours: ["Pakistan", "Bangladesh", "Nepal", "Myanmar", "Bhutan"],
+};
+
+const ans = `${myCountry.country} has ${myCountry.population} millions ${myCountry.language}-speaking people, ${myCountry.neighbours.length} neighbouring countries and a capital called ${myCountry.capital}.`;
+
+console.log(ans);
+*/
