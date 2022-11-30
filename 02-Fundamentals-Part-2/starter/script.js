@@ -184,3 +184,68 @@ const ans = `${myCountry.country} has ${myCountry.population} millions ${myCount
 
 console.log(ans);
 */
+
+// LECTURE OBJECT METHODS
+/*
+const myCountry = {
+  country: "India",
+  capital: "New Delhi",
+  language: "Hindi",
+  population: 1200,
+  neighbours: ["Pakistan", "Bangladesh", "Nepal", "Myanmar", "Bhutan"],
+  describe: function () {
+    return `${this.country} has ${this.population} millions ${this.language}-speaking people, ${this.neighbours.length} countries and a capital called ${this.capital}. `;
+  },
+
+  checkIsland: function () {
+    this.isIsland = this.neighbours.length === 0 ? true : false;
+    return this.isIsland;
+  },
+};
+
+console.log(myCountry.describe());
+console.log(myCountry.checkIsland());
+console.log(myCountry);
+*/
+
+// CODING CHALLENGE #
+/*
+const John = {
+  fullName: "John Smith",
+  mass: 92,
+  height: 1.95,
+  calcBMI: function () {
+    this.BMI = this.mass / (this.height * this.height);
+    return this.BMI;
+  },
+};
+
+const Mark = {
+  fullName: "Mark Miller",
+  mass: 78,
+  height: 1.69,
+  calcBMI: function () {
+    this.BMI = this.mass / (this.height * this.height);
+    return this.BMI;
+  },
+};
+John.calcBMI();
+Mark.calcBMI();
+
+console.log(John.BMI);
+console.log(Mark.BMI);
+
+if (Mark.BMI > John.BMI) {
+  const ans = `${Mark.fullName}'s BMI(${Mark.BMI}) is higher than ${John.fullName}'s (${John.BMI})`;
+  console.log(ans);
+} else {
+  const ans = `${John.fullName}'s BMI(${John.BMI}) is higher than ${Mark.fullName}'s (${Mark.BMI})`;
+  console.log(ans);
+}
+*/
+
+// LECTURE: Iteration: The for Loop
+
+for (let i = 1; i <= 50; i++) {
+  console.log(`Voter number ${i} is currently voting.`);
+}
