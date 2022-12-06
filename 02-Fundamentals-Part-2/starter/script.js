@@ -245,7 +245,85 @@ if (Mark.BMI > John.BMI) {
 */
 
 // LECTURE: Iteration: The for Loop
-
+/*
 for (let i = 1; i <= 50; i++) {
   console.log(`Voter number ${i} is currently voting.`);
 }
+*/
+
+//LECTURE: Looping Arrays, Breaking and Continuing
+/*
+const populations = [152, 1500, 1200, 200];
+let percentages2 = [];
+const percentageOfWorld1 = function name(population) {
+  return (population / 7900) * 100;
+};
+for (let i = 0; i < populations.length; i++) {
+  percentages2.push(percentageOfWorld1(populations[i]));
+}
+
+console.log(percentages2);
+*/
+
+// LECTURE: Looping Backwards and Loops in Loops
+/*
+const listOfNeighbours = [
+  ["Canada", "Mexico"],
+  ["Spain"],
+  ["Norway", "Sweden", "Russia"],
+];
+
+for (let i = 0; i < listOfNeighbours.length; i++) {
+  for (let j = 0; j < listOfNeighbours[i].length; j++) {
+    console.log(`neighbour: ${listOfNeighbours[i][j]}`);
+  }
+}
+*/
+
+//LECTURE: The while Loop
+/*
+const populations = [152, 1500, 1200, 200];
+let percentages3 = [];
+const percentageOfWorld1 = function name(population) {
+  return (population / 7900) * 100;
+};
+
+let i = 0;
+while (i < populations.length) {
+  percentages3.push(percentageOfWorld1(populations[i]));
+  i++;
+}
+
+console.log(percentages3);
+*/
+
+//Coding Challenge #4
+
+const bills = [22, 295, 176, 440, 37, 105, 10, 1100, 86, 52];
+let tips = [];
+let totals = [];
+
+const calcTip = function name(bill) {
+  const tip = bill >= 50 && bill <= 300 ? bill * 0.15 : bill * 0.2;
+  return tip;
+};
+
+for (let i = 0; i < bills.length; i++) {
+  tips[i] = calcTip(bills[i]);
+  totals[i] = tips[i] + bills[i];
+}
+
+console.log(tips);
+console.log(totals);
+
+const calcAverage = function name(arr) {
+  let sum = 0;
+  for (let i = 0; i < arr.length; i++) {
+    sum = sum + arr[i];
+  }
+
+  return sum / arr.length;
+};
+
+const averageTotal = calcAverage(totals);
+console.log(averageTotal);
