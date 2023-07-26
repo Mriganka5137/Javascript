@@ -57,21 +57,103 @@ const dob = 1998;
 
 //  ------------------ HOISTING IN FUNCTIONS ---------------------
 
-console.log(addDecl(5, 5)); //------>Function declarations are Hoisted
-// console.log(addExp(5, 5)); // -------> Function expressions are not hoisted. They are declared with let or const. So they are in the TDZ
-// console.log(addArw(5, 5)); //------>Arrow Function are not hoisted. They are declared with let or const. So they are in the TDZ
-// console.log(addVar(5, 5));//----> addVar is undefined since it is declared with VAR
+// console.log(addDecl(5, 5)); //------>Function declarations are Hoisted
+// // console.log(addExp(5, 5)); // -------> Function expressions are not hoisted. They are declared with let or const. So they are in the TDZ
+// // console.log(addArw(5, 5)); //------>Arrow Function are not hoisted. They are declared with let or const. So they are in the TDZ
+// // console.log(addVar(5, 5));//----> addVar is undefined since it is declared with VAR
 
-function addDecl(a, b) {
-  return a + b;
-}
+// function addDecl(a, b) {
+//   return a + b;
+// }
 
-const addExp = function (a, b) {
-  return a + b;
+// const addExp = function (a, b) {
+//   return a + b;
+// };
+
+// const addArw = (a, b) => a + b;
+
+// var addVar = function (a, b) {
+//   return a + b;
+// };
+/*
+console.log(this);
+
+const calcAge = function (year) {
+  console.log(year - 1998);
+  console.log(this, 'Normal Function');
 };
 
-const addArw = (a, b) => a + b;
+calcAge(2022);
 
-var addVar = function (a, b) {
-  return a + b;
+const calcAgeArrow = year => {
+  console.log(year - 1998);
+  console.log(this, 'arrow Funtion');
 };
+
+calcAgeArrow(2020);
+*/
+
+// const jonas = {
+//   year: 1998,
+//   calcAge: function () {
+//     console.log(this);
+//     console.log(2024 - this.year);
+//   },
+// };
+
+// // jonas.calcAge();
+
+// const mriganka = {
+//   year: 2000,
+// };
+
+// mriganka.calcAge = jonas.calcAge;
+// mriganka.calcAge();
+/*
+const jonas = {
+  firstName: 'Mriganka',
+  year: 1998,
+  calcAge: function () {
+    // console.log(this);
+    // console.log(2024 - this.year);
+
+    // const self = this;
+    // const isMilenial = function () {
+    //   console.log(self);
+    //   console.log(self.year >= 1986 && self.year <= 1999);
+    // };
+    // isMilenial();
+
+    // Solution to above
+    const isMilenial = () => {
+      console.log(this);
+      console.log(this.year >= 1986 && this.year <= 1999);
+    };
+    isMilenial();
+  },
+
+  getName: () => {
+    console.log(this);
+    console.log(`Hello ${this.firstName}`);
+  },
+};
+
+jonas.calcAge();
+// jonas.getName();
+*/
+
+let lastName = 'Saikia';
+let oldLastName = lastName;
+lastName = 'Gogoi';
+console.log(lastName, oldLastName);
+
+const kasturi = {
+  firstName: 'Kasturi',
+  lastName: 'Saikia',
+  age: 22,
+};
+
+const marriedKasturi = { ...kasturi };
+marriedKasturi.lastName = 'Gogoi';
+console.log('Before Marriage: ', kasturi);
+console.log('After Marriage: ', marriedKasturi);
