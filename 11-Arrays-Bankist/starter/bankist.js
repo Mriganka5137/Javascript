@@ -85,6 +85,40 @@ const displayMovements = function (movement) {
 
 displayMovements(account1.movements);
 
+// Calculating balance and displaying in the screen
+const calcDisplayBalance = function (movement) {
+  const balance = movement.reduce((acc, curr) => acc + curr, 0);
+  labelBalance.textContent = `${balance} €`;
+};
+calcDisplayBalance(account1.movements);
+
+const calcDisplaySummary = function (movements) {
+  const balanceIn = movements
+    .filter(mov => mov > 0)
+    .reduce((acc, mov) => acc + mov, 0);
+
+  labelSumIn.textContent = `${balanceIn}€`;
+
+  const balanceOut = movements
+    .filter(mov => mov < 0)
+    .reduce((acc, mov) => acc + Math.abs(mov), 0);
+
+  labelSumOut.textContent = `${balanceOut}€`;
+
+  const interest = movements
+    .filter(mov => mov > 0)
+    .map(deposit => (deposit * 1.2) / 100)
+    .filter((int, i, arr) => {
+      console.log(arr);
+      return int >= 1;
+    })
+    .reduce((acc, curr) => acc + curr, 0);
+
+  labelSumInterest.textContent = `${interest}€`;
+};
+
+calcDisplaySummary(account1.movements);
+
 const accounts = [account1, account2, account3, account4];
 
 const createUserNames = function (accs) {
@@ -98,4 +132,44 @@ const createUserNames = function (accs) {
 };
 
 createUserNames(accounts);
-console.log(accounts);
+// console.log(accounts);
+
+const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+const deposit = movements.filter(mov => mov > 0);
+// console.log(deposit);
+
+const withdrawals = movements.filter(mov => mov < 0);
+// console.log(withdrawals);
+
+// Reduce callback signature  function(accumulator, currentElement, currentIndex, array)
+const balance = movements.reduce(function (acc, cur, i, arr) {
+  return acc + cur;
+}, 0);
+
+// console.log(balance);
+
+// Calculate Max
+const max = movements.reduce(
+  (acc, cur) => (acc > cur ? acc : cur),
+  movements[0]
+);
+
+// In more readable way
+const max2 = movements.reduce(function (acc, curr) {
+  if (acc > curr) {
+    return acc;
+  } else {
+    return curr;
+  }
+}, movements[0]);
+
+// console.log(max);
+// console.log(max2);
+
+// Chaining of methods
+const totalDepositUSD = movements
+  .filter(mov => mov > 0)
+  .map(mov => mov * 1.1)
+  .reduce((acc, curr) => acc + curr, 0);
+
+// console.log(totalDepositUSD);
