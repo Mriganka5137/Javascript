@@ -83,41 +83,36 @@ const displayMovements = function (movement) {
   });
 };
 
-displayMovements(account1.movements);
-
 // Calculating balance and displaying in the screen
-const calcDisplayBalance = function (movement) {
-  const balance = movement.reduce((acc, curr) => acc + curr, 0);
-  labelBalance.textContent = `${balance} €`;
+const calcDisplayBalance = function (acc) {
+  acc.balance = acc.movements.reduce((acc, curr) => acc + curr, 0);
+  labelBalance.textContent = `${acc.balance} €`;
 };
-calcDisplayBalance(account1.movements);
 
-const calcDisplaySummary = function (movements) {
-  const balanceIn = movements
+const calcDisplaySummary = function (acc) {
+  const balanceIn = acc.movements
     .filter(mov => mov > 0)
     .reduce((acc, mov) => acc + mov, 0);
 
   labelSumIn.textContent = `${balanceIn}€`;
 
-  const balanceOut = movements
+  const balanceOut = acc.movements
     .filter(mov => mov < 0)
     .reduce((acc, mov) => acc + Math.abs(mov), 0);
 
   labelSumOut.textContent = `${balanceOut}€`;
 
-  const interest = movements
+  const interest = acc.movements
     .filter(mov => mov > 0)
-    .map(deposit => (deposit * 1.2) / 100)
+    .map(deposit => (deposit * acc.interestRate) / 100)
     .filter((int, i, arr) => {
-      console.log(arr);
+      // console.log(arr);
       return int >= 1;
     })
     .reduce((acc, curr) => acc + curr, 0);
 
   labelSumInterest.textContent = `${interest}€`;
 };
-
-calcDisplaySummary(account1.movements);
 
 const accounts = [account1, account2, account3, account4];
 
@@ -134,6 +129,85 @@ const createUserNames = function (accs) {
 createUserNames(accounts);
 // console.log(accounts);
 
+const updateUI = function (acc) {
+  // Display Movements
+  displayMovements(acc.movements);
+  // Display Balance
+  calcDisplayBalance(acc);
+  // Display SUmmary
+  calcDisplaySummary(acc);
+};
+
+let currentUser;
+
+btnLogin.addEventListener('click', function (e) {
+  // Prevent eventdefault because on submit button it rerenders
+  e.preventDefault();
+  currentUser = accounts.find(acc => acc.username === inputLoginUsername.value);
+  // console.log(currentUser);
+
+  if (currentUser?.pin === Number(inputLoginPin.value)) {
+    // console.log('Login Successfull');
+    labelWelcome.textContent = `Welcome back, ${
+      currentUser.owner.split(' ')[0]
+    }`;
+    // Display UI
+    inputLoginPin.value = inputLoginUsername.value = '';
+    inputLoginPin.blur(); // this is for removing the focus state
+    containerApp.style.opacity = 100;
+
+    updateUI(currentUser);
+  }
+});
+
+btnTransfer.addEventListener('click', function (e) {
+  e.preventDefault();
+  const receiverAcc = accounts.find(
+    acc => acc.username === inputTransferTo.value
+  );
+  const amount = Number(inputTransferAmount.value);
+  // console.log(receiverAcc, amount);
+
+  if (
+    amount > 0 &&
+    receiverAcc &&
+    currentUser.balance >= amount &&
+    receiverAcc?.username !== currentUser.username
+  ) {
+    receiverAcc.movements.push(amount);
+    currentUser.movements.push(-amount);
+
+    // update UI
+    updateUI(currentUser);
+  }
+
+  inputTransferAmount.value = inputTransferTo.value = '';
+});
+
+btnClose.addEventListener('click', function (e) {
+  e.preventDefault();
+
+  if (
+    currentUser.username === inputCloseUsername.value &&
+    currentUser.pin === Number(inputClosePin.value)
+  ) {
+    // console.log('close account');
+    const index = accounts.findIndex(
+      acc => acc.username === currentUser.username
+    );
+
+    accounts.splice(index, 1);
+    containerApp.style.opacity = 0;
+    labelWelcome.textContent = 'Log in to get started';
+  }
+
+  // Log out
+
+  // Clear the form
+  inputCloseUsername.value = inputClosePin.value = '';
+});
+
+/*
 const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 const deposit = movements.filter(mov => mov > 0);
 // console.log(deposit);
@@ -173,3 +247,27 @@ const totalDepositUSD = movements
   .reduce((acc, curr) => acc + curr, 0);
 
 // console.log(totalDepositUSD);
+
+// Find method ---> Similar to Filter method but it returns the first element that satisfies the condition
+// Returns only one element .
+console.log(movements);
+const firstWithdrawal = movements.find(mov => mov < 0);
+console.log(firstWithdrawal);
+
+// using find()
+console.log(accounts);
+const account = accounts.find(acc => acc.owner === 'Jessica Davis');
+console.log(account);
+
+// using "for of"
+// let jessicaAcc;
+// for (const [i, acc] of accounts.entries()) {
+//   console.log(i);
+//   if (acc.owner === 'Jessica Davis') {
+//     jessicaAcc = acc;
+//     break;
+//   }
+// }
+
+// console.log(jessicaAcc);
+*/
