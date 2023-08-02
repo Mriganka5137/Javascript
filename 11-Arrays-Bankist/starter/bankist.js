@@ -69,9 +69,11 @@ const currencies = new Map([
   ['GBP', 'Pound sterling'],
 ]);
 
-const displayMovements = function (movement) {
+const displayMovements = function (movement, sort = false) {
+  const movs = sort ? movement.slice().sort((a, b) => a - b) : movement;
+
   containerMovements.innerHTML = '';
-  movement.forEach(function (mov, i) {
+  movs.forEach(function (mov, i) {
     const type = mov > 0 ? `deposit` : `withdrawal`;
     const html = `
     <div class="movements__row">
@@ -116,6 +118,9 @@ const calcDisplaySummary = function (acc) {
 
 const accounts = [account1, account2, account3, account4];
 
+// ###########################################################
+// ###########################################################
+// CREATE USERNAME
 const createUserNames = function (accs) {
   accs.forEach(acc => {
     acc.username = acc.owner
@@ -129,6 +134,9 @@ const createUserNames = function (accs) {
 createUserNames(accounts);
 // console.log(accounts);
 
+// ###########################################################
+// ###########################################################
+// UPDATE UI
 const updateUI = function (acc) {
   // Display Movements
   displayMovements(acc.movements);
@@ -138,6 +146,9 @@ const updateUI = function (acc) {
   calcDisplaySummary(acc);
 };
 
+// ###########################################################
+// ###########################################################
+// LOGIN USER
 let currentUser;
 
 btnLogin.addEventListener('click', function (e) {
@@ -160,6 +171,9 @@ btnLogin.addEventListener('click', function (e) {
   }
 });
 
+// ###########################################################
+// ###########################################################
+// TRANSFER MONEY
 btnTransfer.addEventListener('click', function (e) {
   e.preventDefault();
   const receiverAcc = accounts.find(
@@ -184,6 +198,22 @@ btnTransfer.addEventListener('click', function (e) {
   inputTransferAmount.value = inputTransferTo.value = '';
 });
 
+// ###########################################################
+// ###########################################################
+// REQUEST LOAN
+btnLoan.addEventListener('click', function (e) {
+  e.preventDefault();
+  const amount = Number(inputLoanAmount.value);
+  if (amount > 0 && currentUser.movements.some(mov => mov >= amount * 0.1)) {
+    currentUser.movements.push(amount);
+    updateUI(currentUser);
+  }
+
+  inputLoanAmount.value = '';
+});
+// ###########################################################
+// ###########################################################
+// CLOSE ACCOUNT
 btnClose.addEventListener('click', function (e) {
   e.preventDefault();
 
@@ -206,6 +236,38 @@ btnClose.addEventListener('click', function (e) {
   // Clear the form
   inputCloseUsername.value = inputClosePin.value = '';
 });
+
+// ###########################################################
+// ###########################################################
+// SORT BUTTON
+let sorted = false;
+btnSort.addEventListener('click', function (e) {
+  e.preventDefault();
+  displayMovements(currentUser.movements, !sorted);
+  sorted = !sorted;
+});
+
+// Calculating the total amount in the BANK
+// console.log(accounts);
+const allMovements = accounts.map(mov => mov.movements);
+// console.log(allMovements); // -------> Contains all the movements arrays
+const allMovementsInBank = allMovements.flat();
+// console.log(allMovementsInBank); //------->200, 450, -400, 3000, -650, -130, 70, 1300, 5000, 3400, -150, -790, -3210, -1000, 8500, -30, 200, -200, 340, -300, -20, 50, 400, -460, 430, 1000, 700, 50, 90]
+const totalBalance = allMovementsInBank.reduce((acc, curr) => acc + curr, 0);
+// console.log(totalBalance);
+
+// Using chaining
+const totalBalanceChaining = accounts
+  .map(mov => mov.movements)
+  .flat()
+  .reduce((acc, curr) => acc + curr, 0);
+// console.log(totalBalanceChaining);
+
+//FLATMAP ---------> Maps and flats the arr
+const totalBalanceFlatMap = accounts
+  .flatMap(mov => mov.movements)
+  .reduce((acc, curr) => acc + curr, 0);
+// console.log(totalBalanceFlatMap);
 
 /*
 const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
@@ -270,4 +332,63 @@ console.log(account);
 // }
 
 // console.log(jessicaAcc);
+
+
+// INCLUDES method ---- Looks for equality---- if found return TRUE else FALSE
+
+// Takes the value as parameter
+console.log(arr1.includes(200));
+
+// SOME method ---- CONDITION
+console.log(arr1.some(mov => mov > 2000)); //------ TRUE
+console.log(arr1.some(mov => mov > 20000)); //------ FALSE
+
+// EVERY ------- returns TRUE only if all the elements satisfies the condition
+console.log(arr1.every(mov => mov > 0 || mov < 0)); //---------TRUE
+console.log(arr1.every(mov => mov > 0)); //--------------FALSE
+
+const arr1 = [[200, 450], -400, 3000, [-650, -130], 70, 1300];
+// FLAT --------- flaten the nested arrays into 1D
+const flattedArr = arr1.flat();
+console.log(flattedArr); // [200, 450, -400, 3000, -650, -130, 70, 1300]
+
+// array with 2nd level nested array
+const arr2 = [[[200, 450], -400], 3000, [-650, -130], 70, 1300];
+console.log(arr2.flat()); //------[[ 200, 450], -400, 3000, -650, -130, 70, 1300]
+
+// Flatting the array to 2nd level
+console.log(arr2.flat(2)); //------[200, 450, -400, 3000, -650, -130, 70, 1300]
 */
+
+// SORT ---- sort  method by default sort the array alphabetically, even with numbers and mutates the original array
+// STRINGS
+const name = ['Mriganka', 'Kasturi', 'Labonya', 'Abhijeet', 'Rajdeep'];
+name.sort();
+console.log(name);
+
+// NUMBERS
+const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+movements.sort();
+console.log(movements); //[-130, -400, -650, 1300, 200, 3000, 450, 70]
+
+// RETURN > 0, to keep the order
+// RETURN < 0, to swap the position
+
+// ASCENDING
+movements.sort((a, b) => {
+  if (a > b) return 1;
+  if (a < b) return -1;
+});
+// Shorthand
+movements.sort((a, b) => a - b);
+console.log(movements); //[-650, -400, -130, 70, 200, 450, 1300, 3000]
+
+// DESCENDING
+movements.sort((a, b) => {
+  if (a > b) return -1;
+  if (a < b) return 1;
+});
+// SHORTHAND
+movements.sort((a, b) => b - a);
+
+console.log(movements); //[3000, 1300, 450, 200, 70, -130, -400, -650]
