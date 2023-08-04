@@ -359,17 +359,17 @@ console.log(arr2.flat()); //------[[ 200, 450], -400, 3000, -650, -130, 70, 1300
 // Flatting the array to 2nd level
 console.log(arr2.flat(2)); //------[200, 450, -400, 3000, -650, -130, 70, 1300]
 */
-
+/*
 // SORT ---- sort  method by default sort the array alphabetically, even with numbers and mutates the original array
 // STRINGS
 const name = ['Mriganka', 'Kasturi', 'Labonya', 'Abhijeet', 'Rajdeep'];
 name.sort();
-console.log(name);
+// console.log(name);
 
 // NUMBERS
 const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 movements.sort();
-console.log(movements); //[-130, -400, -650, 1300, 200, 3000, 450, 70]
+// console.log(movements); //[-130, -400, -650, 1300, 200, 3000, 450, 70]
 
 // RETURN > 0, to keep the order
 // RETURN < 0, to swap the position
@@ -381,7 +381,7 @@ movements.sort((a, b) => {
 });
 // Shorthand
 movements.sort((a, b) => a - b);
-console.log(movements); //[-650, -400, -130, 70, 200, 450, 1300, 3000]
+// console.log(movements); //[-650, -400, -130, 70, 200, 450, 1300, 3000]
 
 // DESCENDING
 movements.sort((a, b) => {
@@ -391,4 +391,99 @@ movements.sort((a, b) => {
 // SHORTHAND
 movements.sort((a, b) => b - a);
 
-console.log(movements); //[3000, 1300, 450, 200, 70, -130, -400, -650]
+// console.log(movements); //[3000, 1300, 450, 200, 70, -130, -400, -650]
+
+// ARRAY.from() and ARRAY.fill() Methods
+const x = new Array(1, 2); //------ Creates [1,2]
+console.log(x);
+const y = new Array(7); //-------Creates empty array of size 7
+// y.fill(1); //-----Fills the empty array with 1 in every position
+y.fill(5, 1, 5); //--------[empty, 5, 5, 5, 5, empty × 2]
+console.log(y);
+
+// Array.from() ---It provides a way to convert other objects, such as NodeList, Set, Map,
+//  or a string, into a standard JavaScript array.
+// Array.from(iterable, mapFunction, thisArg);
+const arr = Array.from({ length: 1000 }, () => 1);
+console.log(arr);
+
+const newArr = Array.from({ length: 5 }, (ele, i) => i + 1);
+console.log(newArr); //---[1, 2, 3, 4, 5]
+
+const firstname = 'Mriganka';
+console.log(Array.from(firstname)); //-------['M', 'r', 'i', 'g', 'a', 'n', 'k', 'a']
+const nameArr = Array.from(firstname, (ele, i) => ele + i);
+console.log(nameArr); //-----['M0', 'r1', 'i2', 'g3', 'a4', 'n5', 'k6', 'a7']
+
+// Generate an array of 100 random dice roll
+const dice = Array.from({ length: 100 }, (_, i) => {
+  const num = Math.trunc(Math.random() * 10);
+  if (num > 6) return num - 6;
+  else return num;
+});
+console.log(dice);
+
+labelBalance.addEventListener('click', function () {
+  const movementsVal = Array.from(
+    document.querySelectorAll('.movements__value'),
+    el => el.textContent.replace('€', '')
+  );
+  console.log(movementsVal);
+});
+*/
+
+// Practice
+// 1. Balance of deposit
+const balanceDeposit = accounts
+  .flatMap(acc => acc.movements)
+  .filter(mov => mov > 0)
+  .reduce((acc, curr) => acc + curr, 0);
+console.log(balanceDeposit);
+
+// 2.Number of deposits greater than 1000
+// Method 1:
+const numOfDeposits1000 = accounts
+  .flatMap(acc => acc.movements)
+  .filter(mov => mov >= 1000).length;
+console.log(numOfDeposits1000);
+
+// Method 2: using reduce
+const numOfDeposits1000v2 = accounts
+  .flatMap(acc => acc.movements)
+  .reduce((count, curr) => (curr >= 1000 ? count + 1 : count), 0);
+
+console.log(numOfDeposits1000v2);
+
+// Create Object with total deposit and withdrawal
+const balance = accounts
+  .flatMap(acc => acc.movements)
+  .reduce(
+    (sums, curr) => {
+      curr > 0 ? (sums.deposit += curr) : (sums.withdrawal += curr);
+      return sums;
+    },
+    { deposit: 0, withdrawal: 0 }
+  );
+console.log(balance);
+
+// 4. Capitalized the sentence
+function capitalize(title) {
+  const exceptions = ['a', 'an', 'the', 'is', 'on', 'in', 'of', 'to', 'and'];
+
+  function f1(word) {
+    return exceptions.includes(word)
+      ? word
+      : word[0].toUpperCase() + word.slice(1);
+  }
+
+  const answer = title
+    .toLowerCase()
+    .split(' ')
+    .map(word => f1(word))
+    .join(' ');
+
+  return f1(answer);
+}
+
+console.log(capitalize('this is an example of Capitalize function'));
+console.log(capitalize('And this is a and an to'));
